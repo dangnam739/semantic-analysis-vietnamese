@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>SVA</title>
+
+        <link href="static/bootstrap.min.css" rel="stylesheet">
+
+        <link href="static/jumbotron-narrow.css" rel="stylesheet">
+
+        <style>
+            label{
+                text-align: left;
+                color: red;
+                font-size: 20px;
+                font-weight: normal
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="header">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation">
+                            <a href="/">Home</a>
+                        </li>
+                        <li role="presentation" class="active">
+                            <a href="#">SAV</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <h3 class="text-primary"><a href="/" style="text-decoration: none">SAV App</a></h3>
+            </div>
+
+            <div class="jumbotron">
+                <h1>Predict semantic of paragraph Vietnamese</h1>
+                <br><br>
+                <form class="form-group">
+                    <label for="inputSentence">Please enter a paragraph Vietnamese</label>
+                    <br><br>
+                    <textarea class="form-control" id="inputSentence" name="inputSentence" placeholder="Enter your comment or review..." style="height: 150px; font-size: 16px"></textarea>
+                    <br><br><br><br>
+
+                    {% if prediction == 1%}
+                        <h2 style="color:#761c19;">Result: </h2>
+                        <p style="text-align: center; color: red; font-weight: bold">Tích cực (Positive)</p>
+                    {% elif prediction == 0%}
+                        <h2 style="color:#761c19;">Result: </h2>
+                        <p style="text-align: center; color: red; font-weight: bold">Tiêu cực (Negative)</p>
+                    {% endif %}
+
+                    <a href="/sva" style="text-decoration: none;">
+                        <button id="sva" class="btn btn-lg btn-success" type="button" style="width: auto">Try it again</button>
+                    </a>
+                </form>
+            </div>
+
+
+            <footer class="footer">
+                <p>&copy; Company 2020</p>
+            </footer>
+        </div>
+
+    </body>
+</html>
