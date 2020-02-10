@@ -6,6 +6,7 @@ It is my project to build a simple web app that can sematic analysis Vietnamese 
 Để chạy ứng dụng web này, bạn cần truy cập vào terminal(trong Linix) hoặc cmd(trong windows) và chạy lệnh sau:
 
 `$ cd <path_webApp>`
+
 `$ python app.py`
 
 Sau đó truy cập vào đường link mặc định:   http://127.0.0.1:5000/
