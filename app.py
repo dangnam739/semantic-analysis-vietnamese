@@ -208,11 +208,12 @@ def sva():
 
 @app.route('/result', methods=['GET','POST'])
 def result():
+
     if request.method == 'POST':
         sentence = request.form['inputSentence']
         my_prediction = predict(sentence, model)
 
-    return render_template('result.html', prediction = my_prediction)
+    return render_template('result.html', prediction = my_prediction, sentence = sentence)
 
 if __name__ == '__main__':
     app.run(debug=True)
