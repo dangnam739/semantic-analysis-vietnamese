@@ -4,6 +4,10 @@ import tensorflow as tf
 from pyvi import ViTokenizer, ViPosTagger
 from flask import Flask, render_template, url_for, request
 
+# Enable Eager Execution
+tf.enable_eager_execution()
+tf.executing_eagerly()
+
 
 # ------------------------------------- Build model -------------------------------------------
 
@@ -20,7 +24,7 @@ word2idx = {w: i for i, w in enumerate(words_list)}
 #Hàm clean_sent: chuẩn hóa lại câu văn.
 strip_special_chars = re.compile("[^\w0-9]+")
 
-def clean_sent(string):
+def clean_sentences(string):
     string = string.lower().replace("<br />", " ")
     return re.sub(strip_special_chars, "", string.lower())
 
@@ -101,13 +105,13 @@ class SentimentAnalysisModel(tf.keras.Model):
 
         # Khởi tạo các layer
         for i in range(n_layers):
-            new_lstm = tf.keras.layers.CuDNNLSTM(units=lstm_units, return_sequences=True)
+            new_lstm = tf.keras.layers.LSTM(units=lstm_units, return_sequences=True)
             self.lstm_layers.append(new_lstm)
             new_dropout = tf.keras.layers.Dropout(rate=dropout_rate)
             self.dropout_layers.append(new_dropout)
 
         # Tầng cuối cùng
-        new_lstm = tf.keras.layers.CuDNNLSTM(units=lstm_units, return_sequences=False)
+        new_lstm = tf.keras.layers.LSTM(units=lstm_units, return_sequences=False)
         self.lstm_layers.append(new_lstm)
 
         self.dense_layer = tf.keras.layers.Dense(num_classes, activation="softmax")
@@ -151,24 +155,10 @@ MAX_SEQ_LENGTH = 200
 model = SentimentAnalysisModel(word_vectors, LSTM_UNITS, N_LAYERS, NUM_CLASSES)
 
 #Đưa trọng số vào model
-model.load_weights(tf.train.latest_checkpoint('model/'))
+model.load_weights(tf.train.latest_checkpoint('model'))
 
 
-
-# ------------------------------------ Build Web app -------------------------------------------
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/sva')
-def sva():
-    return render_template('sva.html')
-
-@app.route('/result')
-def predict(model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENGTH):
+def predict(sentence, model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENGTH):
     """
     Dự đoán cảm xúc của một câu
 
@@ -189,9 +179,6 @@ def predict(model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENGTH):
         0 nếu là negative, 1 nếu là positive
     """
 
-    if request.method == 'POST':
-        sentence = request.form['inputSentence']
-
     # Tokenize/Tách từ trong câu
     tokenized_sent = ViTokenizer.tokenize(sentence)
 
@@ -206,8 +193,29 @@ def predict(model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENGTH):
     pred = model(input_data)
     predictions = tf.argmax(pred, 1).numpy().astype(np.int32)
 
-    return render_template('result.html')
+    return predictions
 
+
+
+# ------------------------------------ Build Web app -------------------------------------------
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/sva')
+def sva():
+    return render_template('sva.html')
+
+@app.route('/result', methods=['GET','POST'])
+def result():
+    if request.method == 'POST':
+        sentence = request.form['inputSentence']
+        my_prediction = predict(sentence, model)
+
+    return render_template('result.html', prediction = my_prediction)
 
 if __name__ == '__main__':
     app.run(debug=True)
