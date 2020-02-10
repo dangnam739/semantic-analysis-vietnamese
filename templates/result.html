@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
     <head>
         <title>SVA</title>
@@ -41,17 +41,18 @@
                 <h1>Predict semantic of paragraph Vietnamese</h1>
                 <br><br>
                 <form class="form-group">
-                    <label for="inputSentence">Please enter a paragraph Vietnamese</label>
                     <br><br>
-                    <textarea class="form-control" id="inputSentence" name="inputSentence" placeholder="Enter your comment or review..." style="height: 150px; font-size: 16px"></textarea>
+                    {% if sentence %}
+                    <p style="font-size: 20px"><b>Comment/Review:</b></p><p style="font-size: 25px; color: blue"> {{sentence}}</p>
+                    {% endif %}
                     <br><br>
 
                     {% if prediction == 1%}
-                        <h2 style="color:#761c19;">Result: </h2>
-                        <p style="text-align: center; color: red; font-weight: bold; font-size: 20px">Tích cực (Positive)</p>
+                        <p style="color:#761c19;">Result: </p>
+                        <h2 style="text-align: center; color: red; font-weight: bold;">Tích cực (Positive)</h2>
                     {% elif prediction == 0%}
-                        <h2 style="color:#761c19;">Result: </h2>
-                        <p style="text-align: center; color: red; font-weight: bold; font-size: 20px">Tiêu cực (Negative)</p>
+                        <p style="color:#761c19;">Result: </p>
+                        <h2 style="text-align: center; color: red; font-weight: bold;">Tiêu cực (Negative)</h2>
                     {% endif %}
 
                     <br><br>
