@@ -44,15 +44,17 @@
                     <label for="inputSentence">Please enter a paragraph Vietnamese</label>
                     <br><br>
                     <textarea class="form-control" id="inputSentence" name="inputSentence" placeholder="Enter your comment or review..." style="height: 150px; font-size: 16px"></textarea>
-                    <br><br><br><br>
+                    <br><br>
 
                     {% if prediction == 1%}
                         <h2 style="color:#761c19;">Result: </h2>
-                        <p style="text-align: center; color: red; font-weight: bold">Tích cực (Positive)</p>
+                        <p style="text-align: center; color: red; font-weight: bold; font-size: 20px">Tích cực (Positive)</p>
                     {% elif prediction == 0%}
                         <h2 style="color:#761c19;">Result: </h2>
-                        <p style="text-align: center; color: red; font-weight: bold">Tiêu cực (Negative)</p>
+                        <p style="text-align: center; color: red; font-weight: bold; font-size: 20px">Tiêu cực (Negative)</p>
                     {% endif %}
+
+                    <br><br>
 
                     <a href="/sva" style="text-decoration: none;">
                         <button id="sva" class="btn btn-lg btn-success" type="button" style="width: auto">Try it again</button>
