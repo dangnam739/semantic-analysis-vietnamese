@@ -21,51 +21,10 @@ word_vectors = np.float32(word_vectors)
 word2idx = {w: i for i, w in enumerate(words_list)}
 
 
-#Hàm clean_sent: chuẩn hóa lại câu văn.
-strip_special_chars = re.compile("[^\w0-9]+")
-
-def clean_sentences(string):
-    string = string.lower().replace("<br />", " ")
-    return re.sub(strip_special_chars, "", string.lower())
-
-
-def get_sentence_indices(sentence, max_seq_length, _words_list):
-    """
-    Hàm này dùng để lấy index cho từng từ
-    trong câu (không có dấu câu, có thể in hoa)
-    Parameters
-    ----------
-    sentence là câu cần xử lý
-    max_seq_length là giới hạn số từ tối đa trong câu
-    _words_list là bản sao local của words_list, được truyền vào hàm
-    """
-    indices = np.zeros((max_seq_length), dtype='int32')
-
-    # Tách câu thành từng tiếng
-    words = [word.lower() for word in sentence.split()]
-
-    # Lấy chỉ số của UNK
-    unk_idx = word2idx['UNK']
-
-    for idx, word in enumerate(words):
-        if idx < max_seq_length:
-            if (word in _words_list):
-                word_idx = word2idx[word]
-            else:
-                word_idx = word2idx['UNK']
-
-            indices[idx] = word_idx
-        else:
-            break
-
-    return indices
-
-
+# Mô hình phân tích cảm xúc của câu
 class SentimentAnalysisModel(tf.keras.Model):
     """
-    Mô hình phân tích cảm xúc của câu
-
-    Properties
+    Parameter
     ----------
     word2vec: numpy.array
         word vectors
@@ -119,11 +78,8 @@ class SentimentAnalysisModel(tf.keras.Model):
 
     def call(self, inputs):
         # Thực hiện các bước biến đổi khi truyền thuận input qua mạng
-
         inputs = tf.cast(inputs, tf.int32)
         # Input hiện là indices, cần chuyển sang dạng vector
-        # sử dụng:
-        # tf.nn.embeddings_lookup(embeddings, indices)
 
         x = tf.nn.embedding_lookup(self.word2vec, inputs)
 
@@ -151,11 +107,45 @@ N_LAYERS = 2
 NUM_CLASSES = 2
 MAX_SEQ_LENGTH = 200
 
-#Build model
-model = SentimentAnalysisModel(word_vectors, LSTM_UNITS, N_LAYERS, NUM_CLASSES)
 
-#Đưa trọng số vào model
-model.load_weights(tf.train.latest_checkpoint('model'))
+# Hàm chuẩn hóa câu
+strip_special_chars = re.compile("[^\w0-9 ]+")
+
+def clean_sentences(string):
+    string = string.lower().replace("<br />", " ")
+    return re.sub(strip_special_chars, "", string.lower())
+
+
+def get_sentence_indices(sentence, max_seq_length, _words_list):
+    """
+    Hàm này dùng để lấy index cho từng từ
+    trong câu (không có dấu câu, có thể in hoa)
+    Parameters
+    ----------
+    sentence là câu cần xử lý
+    max_seq_length là giới hạn số từ tối đa trong câu
+    _words_list là bản sao local của words_list, được truyền vào hàm
+    """
+    indices = np.zeros((max_seq_length), dtype='int32')
+
+    # Tách câu thành từng tiếng
+    words = [word.lower() for word in sentence.split()]
+
+    # Lấy chỉ số của UNK
+    unk_idx = word2idx['UNK']
+
+    for idx, word in enumerate(words):
+        if idx < max_seq_length:
+            if (word in _words_list):
+                word_idx = word2idx[word]
+            else:
+                word_idx = word2idx['UNK']
+
+            indices[idx] = word_idx
+        else:
+            break
+
+    return indices
 
 
 def predict(sentence, model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENGTH):
@@ -180,9 +170,11 @@ def predict(sentence, model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENG
     """
 
     # Tokenize/Tách từ trong câu
+    # Sử dụng hàm word_tokenize vừa import ở trên
     tokenized_sent = ViTokenizer.tokenize(sentence)
 
     # Đưa câu đã tokenize về dạng input_data thích hợp để truyền vào model
+    ### START CODE HERE
     tokenized_sent = clean_sentences(tokenized_sent)
     input_data = get_sentence_indices(tokenized_sent, _max_seq_length, _word_list)
 
@@ -196,6 +188,11 @@ def predict(sentence, model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENG
     return predictions
 
 
+#Build model
+model = SentimentAnalysisModel(word_vectors, LSTM_UNITS, N_LAYERS, NUM_CLASSES)
+
+#Đưa trọng số vào model
+model.load_weights(tf.train.latest_checkpoint('model'))
 
 # ------------------------------------ Build Web app -------------------------------------------
 
