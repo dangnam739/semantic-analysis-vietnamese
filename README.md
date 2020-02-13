@@ -3,29 +3,38 @@
 
 It is my project to build a simple web app that can sematic analysis Vietnamese comment or review.
 
-Để chạy ứng dụng web này, bạn cần truy cập vào terminal(trong Linix) hoặc cmd(trong windows) và chạy lệnh sau:
+## How to use it
 
-`$ cd <path_webApp>`
+### 1. Clone this repo
+```console
+  git clone https://github.com/dangnam739/semantic-analysis-vietnamese
+  cd <...>/semantic-analysis-vietnamese
+```
 
-`$ python app.py`
-
-Sau đó truy cập vào đường link mặc định:   http://127.0.0.1:5000/
-
+### 2. Run file app.py
+```console
+  python app.py
+```
 <img src='img/run.png'>
 
-Màn hình sẽ xuất hiện giao diện trang chủ giới thiệu cho SAV App
+Then, access the link: http://127.0.0.1:5000/ with default web browser.
 
 <img src='img/home.png'>
 
-Để thực hiện chức năng SAV, nhấn vào `Try it now`  hoặc `SVA`, tiến hành nhập đoạn văn bình luận (comment) hoặc đánh giá (review) để phân tích
+Result is SAV App's homepage that shows the introduction of SAV. 
+
+### 3. Try analysis a example
+Click `Try it now`  or `SVA`, then enter your comment or reivew about restaurant, film, hotel, place,...
+
+*Example: *
 
 <img src='img/sav.png'>
 
-Kết quả cho ra sẽ được hiện thị như sau:
+The result is `positive` or `negative`:
 
 <img src='img/result.png'>
 
-Bạn có thể tiếp tục thử với đoạn văn khác thông quá nút `Try it again`.
+If you want to try with another paragraph, click `Try it again`.
 
 
 
