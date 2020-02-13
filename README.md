@@ -19,14 +19,15 @@ It is my project to build a simple web app that can sematic analysis Vietnamese 
 
 Then, access the link: http://127.0.0.1:5000/ with default web browser.
 
+Result is SAV App's homepage that shows the introduction of SAV. 
+
 <img src='img/home.png'>
 
-Result is SAV App's homepage that shows the introduction of SAV. 
 
 ### 3. Try analysis a example
 Click `Try it now`  or `SVA`, then enter your comment or reivew about restaurant, film, hotel, place,...
 
-*Example: *
+_Example:_
 
 <img src='img/sav.png'>
 
