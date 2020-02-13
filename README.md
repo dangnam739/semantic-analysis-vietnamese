@@ -24,7 +24,7 @@ Result is SAV App's homepage that shows the introduction of SAV.
 <img src='img/home.png'>
 
 
-### 3. Try analysis a example
+### 3. Try analysis a paragraph vietnamese
 Click `Try it now`  or `SVA`, then enter your comment or reivew about restaurant, film, hotel, place,...
 
 _Example:_
