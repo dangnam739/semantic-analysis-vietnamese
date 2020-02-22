@@ -43,18 +43,25 @@
                 <form class="form-group">
                     <br><br>
                     {% if sentence %}
-                    <p style="font-size: 20px"><b>Comment/Review:</b></p><p style="font-size: 25px; color: blue"> {{sentence}}</p>
+                        <p style="font-size: 20px"><b>Comment/Review:</b></p><p style="font-size: 25px; color: blue"> {{sentence}}</p>
                     {% endif %}
                     <br><br>
 
                     {% if prediction == 1%}
                         <p style="color:#761c19; font-size: 20px; font-weight: bold">Result: </p>
                         <img src="/img/positive.png" alt="positive">
-                        <h2 style="text-align: center; color: red; font-weight: bold;">Tích cực (Positive)</h2>
+                        <h2 style="text-align: center; color: red; font-weight: bold">Tích cực (Positive)</h2>
                     {% elif prediction == 0%}
                         <p style="color:#761c19; font-size: 20px; font-weight: bold">Result: </p>
                         <img src="/img/negative.png" alt="negative">
-                        <h2 style="text-align: center; color: red; font-weight: bold;">Tiêu cực (Negative)</h2>
+                        <h2 style="text-align: center; color: red; font-weight: bold">Tiêu cực (Negative)</h2>
+                    {% endif %}
+                    <br><br>
+
+                    {% if prob_pos %}
+                        <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Probability Positive: </b> {{prob_pos}}</p>
+                        <br>
+                        <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Probability Negative: </b> {{1 - prob_pos}}</p>
                     {% endif %}
 
                     <br><br>

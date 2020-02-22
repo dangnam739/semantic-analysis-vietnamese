@@ -184,8 +184,9 @@ def predict(sentence, model, _word_list=words_list, _max_seq_length=MAX_SEQ_LENG
     # Chọn nhãn có xác suất cao nhất và return
     pred = model(input_data)
     predictions = tf.argmax(pred, 1).numpy().astype(np.int32)
+    prob_pos = pred.numpy()[0][1]
 
-    return predictions
+    return predictions, prob_pos
 
 
 #Build model
@@ -211,9 +212,9 @@ def result():
 
     if request.method == 'POST':
         sentence = request.form['inputSentence']
-        my_prediction = predict(sentence, model)
+        my_prediction, prob_pos = predict(sentence, model)
 
-    return render_template('result.html', prediction = my_prediction, sentence = sentence)
+    return render_template('result.html', prediction = my_prediction, sentence = sentence, prob_pos = prob_pos)
 
 if __name__ == '__main__':
     app.run(debug=True)
