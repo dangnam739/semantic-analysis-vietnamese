@@ -38,7 +38,7 @@
             </div>
 
             <div class="jumbotron">
-                <h1>Predict semantic of paragraph Vietnamese</h1>
+                <h1 style="color: blue">Predict semantic of paragraph Vietnamese</h1>
                 <br><br>
                 <form action="{{ url_for('result')}}" method="POST">
                     <label for="inputSentence">Please enter a paragraph Vietnamese</label>
@@ -46,7 +46,7 @@
                     <textarea class="form-control" id="inputSentence" name="inputSentence" placeholder="Enter your comment or review..." style="height: 150px; font-size: 16px" value="{{request.form.inputSentence}}"></textarea>
                     <br><br>
 
-                    <input class="btn btn-success" type="submit" value="Analysis">
+                    <input class="btn btn-primary" type="submit" value="Analysis">
                 </form>
 
 
@@ -54,7 +54,7 @@
 
 
             <footer class="footer">
-                <p>&copy; Company 2020</p>
+                <p>&copy; KDN Company 2020</p>
             </footer>
         </div>
 
