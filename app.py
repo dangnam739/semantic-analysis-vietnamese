@@ -39,9 +39,9 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/sva')
-def sva():
-    return render_template('sva.html')
+@app.route('/sav')
+def sav():
+    return render_template('sav.html')
 
 @app.route('/result', methods=['GET','POST'])
 def result():
@@ -52,6 +52,9 @@ def result():
         my_prediction, prob_pos = predict(sentence, model, words_list, MAX_SEQ_LENGTH, word2idx)
         end = time.time()
         time2run = end - start
+
+    else:
+        return f"<h1>Please enter your paragraph vietnamese in text box !</h1>"
 
     return render_template('result.html', prediction = my_prediction, sentence = sentence,
                            prob_pos = prob_pos, time2run = time2run)
