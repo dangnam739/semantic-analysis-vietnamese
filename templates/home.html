@@ -1,55 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-    <head>
-        <title>SVA - Home</title>
+{% block ul %}
+     <li role="presentation" class="active">
+         <a href="#">Home</a>
+     </li>
+     <li role="presentation">
+         <a href="/sav">SAV</a>
+     </li>
+{% endblock %}
 
-        <link href="static/bootstrap.min.css" rel="stylesheet">
+{% block div %}
 
-        <link href="static/jumbotron-narrow.css" rel="stylesheet">
+    <h1 style="color: blue">Semantic Analysis Vietnamese</h1>
+    <hr class="my-4">
+    <br>
+    <p class="lead text-justify" style="font-size: 20px"><b>Semantic Analysis Vietnamese (SAV)</b>
+        là một mô hình phân tích cảm xúc trong tiếng Việt với 2 lớp cảm xúc là <b>Tích cực (Positive)</b>
+        và <b>Tiêu cực (Negative)</b>. Trong mô hình này sử dụng các kỹ thuật là <b>Word2Vector</b> và
+        mô hình Deep Learning <b>Recurrent Neural Network (RNN)</b>, cụ thể là <b>Long Short Term Memory (LSTM).</b></p>
 
-    </head>
+    <p class="lead text-justify" style="font-size: 20px"><b>SAV</b> cho độ chính xác xấp xỉ <b>87%</b> với các bình luận (comment)
+        hay đánh giá (review) của người dùng, khách hàng về các dịch vụ, giải trí như: ẩm thực, nhà hàng, khách sạn, địa điểm du lịch,
+        homestay, rạp chiếu phim, bộ phim, diễn viên, các thương hiệu,... </p>
 
-    <body>
+    <br><br><br>
+    <p><a class="btn btn-lg btn-success"  href="/sav" role="button">Try it now</a> </p>
 
-    <div class="container">
-        <div class="header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active">
-                        <a href="#">Home</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="/sva">SAV</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <h3 class="text-primary"><a href="/" style="text-decoration: none">SAV App</a></h3>
-        </div>
-
-
-        <div class="jumbotron">
-
-            <h1 style="color: blue">Semantic Analysis Vietnamese</h1>
-            <hr class="my-4">
-            <br>
-            <p class="lead text-justify" style="font-size: 20px"><b>Semantic Analysis Vietnamese (SAV)</b> là một mô hình phân tích cảm xúc trong tiếng Việt với 2 lớp cảm xúc là <b>Tích cực (Positive)</b>
-            và <b>Tiêu cực (Negative)</b>. Trong mô hình này sử dụng các kỹ thuật là <b>Word2Vector</b> và mô hình Deep Learning <b>Recurrent Neural Network (RNN)</b>, cụ thể là <b>Long Short Term Memory (LSTM).</b></p>
-
-            <p class="lead text-justify" style="font-size: 20px"><b>SAV</b> cho độ chính xác xấp xỉ <b>87%</b> với các bình luận (comment) hay đánh giá (review) của người dùng,
-                khách hàng về các dịch vụ, giải trí như: ẩm thực, nhà hàng, khách sạn, địa điểm du lịch, homestay, rạp chiếu phim, bộ phim, diễn viên,
-                 các thương hiệu,... </p>
-
-            <br><br><br>
-            <p><a class="btn btn-lg btn-success"  href="/sva" role="button">Try it now</a> </p>
-        </div>
-
-
-        <footer class="footer">
-            <p>&copy; KDN Company 2020</p>
-        </footer>
-    </div>
-
-    </body>
-</html>
+{% endblock %}
