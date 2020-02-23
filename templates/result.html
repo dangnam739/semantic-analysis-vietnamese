@@ -1,83 +1,47 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% extends "layout.html" %}
 
-    <head>
-        <title>SVA</title>
+{% block ul %}
+    <li role="presentation">
+        <a href="/">Home</a>
+    </li>
+    <li role="presentation">
+        <a href="/sav">SAV</a>
+    </li>
+{% endblock %}
 
-        <link href="static/bootstrap.min.css" rel="stylesheet">
+{% block div %}
 
-        <link href="static/jumbotron-narrow.css" rel="stylesheet">
+    <h1 style="color: blue">Predict semantic of paragraph Vietnamese</h1>
+    <br><br>
+    <form class="form-group-sm">
+        <br><br>
 
-        <style>
-            label{
-                text-align: left;
-                color: red;
-                font-size: 20px;
-                font-weight: normal
-            }
-        </style>
+        <p style="font-size: 20px; color: #761c19"><b>Comment/Review:</b></p>
+        <p style="font-size: 20px; text-align:justify-all;"> {{sentence}}</p>
+        <br><br>
 
-    </head>
+        <p style="color:#761c19; font-size: 20px; font-weight: bold">Result: </p>
 
-    <body>
+        {% if prediction == 1%}
+            <img src="/img/positive.png" alt="positive">
+            <h2 style="text-align: center; color: red; font-weight: bold">Tích cực (Positive)</h2>
+        {% elif prediction == 0%}
+            <img src="/img/negative.png" alt="negative">
+            <h2 style="text-align: center; color: red; font-weight: bold">Tiêu cực (Negative)</h2>
+        {% endif %}
+        <br><br>
 
-        <div class="container">
-            <div class="header">
-                <nav>
-                    <ul class="nav nav-pills pull-right">
-                        <li role="presentation">
-                            <a href="/">Home</a>
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="#">SAV</a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <h3 class="text-primary"><a href="/" style="text-decoration: none">SAV App</a></h3>
-            </div>
-
-            <div class="jumbotron">
-                <h1 style="color: blue">Predict semantic of paragraph Vietnamese</h1>
-                <br><br>
-                <form class="form-group-sm">
-                    <br><br>
-
-                    <p style="font-size: 20px; color: #761c19"><b>Comment/Review:</b></p>
-                    <p style="font-size: 20px; text-align:justify-all;"> {{sentence}}</p>
-                    <br><br>
-
-                    <p style="color:#761c19; font-size: 20px; font-weight: bold">Result: </p>
-
-                    {% if prediction == 1%}
-                        <img src="/img/positive.png" alt="positive">
-                        <h2 style="text-align: center; color: red; font-weight: bold">Tích cực (Positive)</h2>
-                    {% elif prediction == 0%}
-                        <img src="/img/negative.png" alt="negative">
-                        <h2 style="text-align: center; color: red; font-weight: bold">Tiêu cực (Negative)</h2>
-                    {% endif %}
-                    <br><br>
-
-                    <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Time to analysis: </b> {{time2run}} (seconds)</p>
-                    <br>
+        <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Time to analysis: </b> {{time2run}} (seconds)</p>
+        <br>
 
 
-                    <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Probability Positive: </b> {{prob_pos}}</p>
-                    <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Probability Negative: </b> {{1 - prob_pos}}</p>
+        <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Probability Positive: </b> {{prob_pos}}</p>
+        <p style="font-size: 20px; color: darkgreen; text-align: left; margin-left: 200px"><b>Probability Negative: </b> {{1 - prob_pos}}</p>
+        <br><br>
 
-                    <br><br>
+        <a href="/sav" style="text-decoration: none;">
+            <button id="sav" class="btn btn-lg btn-warning" type="button" style="width: auto">Try it again</button>
+        </a>
+    </form>
 
-                    <a href="/sva" style="text-decoration: none;">
-                        <button id="sva" class="btn btn-lg btn-warning" type="button" style="width: auto">Try it again</button>
-                    </a>
-                </form>
-            </div>
-
-
-            <footer class="footer">
-                <p>&copy; KDN Company 2020</p>
-            </footer>
-        </div>
-
-    </body>
-</html>
+{% endblock %}
