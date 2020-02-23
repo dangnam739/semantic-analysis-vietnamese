@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import tensorflow as tf
 from functions import *
@@ -47,9 +48,13 @@ def result():
 
     if request.method == 'POST':
         sentence = request.form['inputSentence']
+        start = time.time()
         my_prediction, prob_pos = predict(sentence, model, words_list, MAX_SEQ_LENGTH, word2idx)
+        end = time.time()
+        time2run = end - start
 
-    return render_template('result.html', prediction = my_prediction, sentence = sentence, prob_pos = prob_pos)
+    return render_template('result.html', prediction = my_prediction, sentence = sentence,
+                           prob_pos = prob_pos, time2run = time2run)
 
 if __name__ == '__main__':
     app.run(debug=True)
