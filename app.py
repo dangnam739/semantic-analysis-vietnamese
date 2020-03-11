@@ -5,8 +5,8 @@ from functions import *
 from flask import Flask, render_template, url_for, request
 
 # Enable Eager Execution
-tf.enable_eager_execution()
-tf.executing_eagerly()
+# tf.enable_eager_execution()
+# tf.executing_eagerly()
 
 # ------------------------------------- Build model -------------------------------------------
 
