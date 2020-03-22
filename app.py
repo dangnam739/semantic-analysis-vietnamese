@@ -1,12 +1,15 @@
+import os
 import time
 import numpy as np
 import tensorflow as tf
 from functions import *
 from flask import Flask, render_template, url_for, request
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 # Enable Eager Execution
-# tf.enable_eager_execution()
-# tf.executing_eagerly()
+tf.enable_eager_execution()
+tf.executing_eagerly()
 
 # ------------------------------------- Build model -------------------------------------------
 
@@ -31,6 +34,12 @@ model = SentimentAnalysisModel(word_vectors, LSTM_UNITS, N_LAYERS, NUM_CLASSES)
 #Đưa trọng số vào model
 model.load_weights(tf.train.latest_checkpoint('model'))
 
+# ------------------------------------- Connect to database -------------------------------------------
+os.environ["DATABASE_URL"] = "postgresql://postgres:123456@127.0.0.1:5432/sav"
+
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
+
 # ------------------------------------- Build Web app -------------------------------------------
 
 app = Flask(__name__)
@@ -52,6 +61,11 @@ def result():
         my_prediction, prob_pos = predict(sentence, model, words_list, MAX_SEQ_LENGTH, word2idx)
         end = time.time()
         time2run = end - start
+
+        #Insert to table
+        db.execute("INSERT INTO labeled_paragraph (content, label) VALUES (:content, :label)",
+                   {"content": sentence, "label": int(my_prediction)})
+        db.commit()
 
     else:
         return f"<h1>Please enter your paragraph vietnamese in text box !</h1>"
