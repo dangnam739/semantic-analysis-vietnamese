@@ -33,7 +33,9 @@ _Example:_
 
 The result is `positive` or `negative`:
 
-<img src='img/result.png'>
+<img src='img/result-pos.png'>
+<img src='img/result-neg.png'>
+
 
 If you want to try with another paragraph, click `Try it again`.
 
