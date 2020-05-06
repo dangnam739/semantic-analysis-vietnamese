@@ -1,27 +1,18 @@
 import os
 import time
-import numpy as np
 import tensorflow as tf
-from functions import *
+from model import *
 from flask import Flask, render_template, url_for, request
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from load_data import word2idx, words_list, word_vectors
+
 
 # Enable Eager Execution
 tf.enable_eager_execution()
 tf.executing_eagerly()
 
 # ------------------------------------- Build model -------------------------------------------
-
-# Tạo word embeddings
-words_list = np.load('data/words_list.npy')
-words_list = words_list.tolist()
-word_vectors = np.load('data/word_vectors.npy')
-word_vectors = np.float32(word_vectors)
-
-# Ma trận index của từ ánh xạ sang v
-word2idx = {w: i for i, w in enumerate(words_list)}
-
 # Các hyperparameters
 LSTM_UNITS = 128
 N_LAYERS = 2
@@ -34,13 +25,13 @@ model = SentimentAnalysisModel(word_vectors, LSTM_UNITS, N_LAYERS, NUM_CLASSES)
 #Đưa trọng số vào model
 model.load_weights(tf.train.latest_checkpoint('model'))
 
-# ------------------------------------- Connect to database -------------------------------------------
+# ------------------------------------- Connect to database ------------------------------------
 os.environ["DATABASE_URL"] = "postgresql://postgres:123456@127.0.0.1:5432/sav"
 
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-# ------------------------------------- Build Web app -------------------------------------------
+# ------------------------------------- Build Web app ------------------------------------------
 
 app = Flask(__name__)
 
